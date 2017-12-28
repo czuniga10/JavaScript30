@@ -59,24 +59,28 @@
 
 <script>
 
-	window.addEventListener('keydown', function(e) {
-		const audio = document.querySelector(`audio[data-key = "${e.keyCode}"]`);
-		const key = document.querySelector(`.key[data-key = "${e.keyCode}"]`);
+//this function plays the sound and adds new css called "playing"
+    function playSound (e){
+		const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+		const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
 		if(!audio)
-			return; //stops function if data-key does not equal above audio numbers
-		audio.currentTime = 0; //basically rewinds sounds as soon as it is clicked
+			return; //stop the function from running all together
+		audio.currentTime = 0; //this rewinds the audio as soon as it hit to allow multiple succession of clicks
 		audio.play();
 		key.classList.add('playing');
-	});
-
-	function removeTransition(e) {
-		if(e.propertyName !== 'transform') //skip it if it doesn't equal transform
-			return;
-		this.classList.remove('playing');
 	}
 
+//this function removes the css "playing" after funciton playSound is fired
+	function removeTransition(e) {
+		if(e.propertyName !== 'transform') //skip it if it's not a transform 
+			return;
+		this.classList.remove('playing');
+	};
+
+//these are the eventListeners listening for 'keydown'
 	const keys = document.querySelectorAll('.key');
-	keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+    window.addEventListener('keydown', playSound);
+	keys.forEach(key => key.addEventListener('transitionend', removeTransition))
 </script>
 
 
