@@ -40,6 +40,18 @@
 <button></button>
 <script>
 
+  const divs = document.querySelectorAll('div');
+
+  function logText(e) {
+    console.log(this.classList.value);
+    // e.stopPropagation(); stops bubbling
+  }
+
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false,
+    once: true //runs function once, any other subsequent clicks will not fire anything
+    }));
+
 </script>
 </body>
 </html>
